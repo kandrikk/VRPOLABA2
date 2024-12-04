@@ -133,29 +133,57 @@ size_t strcountwords(const char *str) {
     return count;
 }
 
-// 12. Разбиение строки на слова
+// Вспомогательная функция для сравнения строк (чувствительность к регистру отключена)
+int case_insensitive_compare(const void *a, const void *b) {
+    const char *str1 = *(const char **)a;
+    const char *str2 = *(const char **)b;
+    return strcasecmp(str1, str2);
+}
+
+// Основная функция
 char** strtowords(const char *str, size_t *count) {
     *count = 0;
+    if (!str || strlen(str) == 0) return NULL;
+
+    // Создаем копию строки, чтобы использовать strtok
     char *copy = strdup(str);
     if (!copy) return NULL;
 
     char **words = NULL;
-    char *word = strtok(copy, " \t\n.,!?");
+    char *token = strtok(copy, " \t\n.,!?;:\"'()[]{}<>"); // Разделители
 
-    while (word) {
-        char **new_words = realloc(words, (*count + 1) * sizeof(char*));
+    // Разбиваем строку на слова
+    while (token) {
+        // Увеличиваем массив под новое слово
+        char **new_words = realloc(words, (*count + 1) * sizeof(char *));
         if (!new_words) {
             free(copy);
+            for (size_t i = 0; i < *count; i++) free(words[i]);
             free(words);
             return NULL;
         }
         words = new_words;
-        words[*count] = strdup(word);
+
+        // Сохраняем слово в массив
+        words[*count] = strdup(token);
+        if (!words[*count]) {
+            free(copy);
+            for (size_t i = 0; i < *count; i++) free(words[i]);
+            free(words);
+            return NULL;
+        }
+
         (*count)++;
-        word = strtok(NULL, " \t\n.,!?");
+        token = strtok(NULL, " \t\n.,!?;:\"'()[]{}<>");
     }
 
     free(copy);
+
+    // Сортируем массив слов в алфавитном порядке
+    if (*count > 1) {
+        qsort(words, *count, sizeof(char *), case_insensitive_compare);
+    }
+
     return words;
 }
 

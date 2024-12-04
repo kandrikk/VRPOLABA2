@@ -35,24 +35,32 @@ int main() {
     char str11[] = "Was it a car or a cat I saw";
     printf("11.strcountwords: %zu\n", strcountwords("Was it a car or a cat I saw"));
 
-    size_t count;
-    char **words = strtowords("Was it a car or a cat I saw", &count);
-    printf("12.strtowords: ");
-    for (size_t i = 0; i < count; i++) {
-        printf("%s ", words[i]);
-        free(words[i]);
-    }
+    char str12[] = "Was it a car or a cat I saw?";
+    size_t count = 0;
 
-    
-    free(words);
-    printf("\n");
+    char **words = strtowords(str12, &count);
+    printf("12.strtowords: ");
+    if (words) {
+        for (size_t i = 0; i < count; i++) {
+            printf("%s", words[i]); // Печатаем слово
+            if (i < count - 1) {
+                printf(";"); // Добавляем точку с запятой, если это не последнее слово
+            }
+            free(words[i]); // Освобождаем память под каждое слово
+        }
+        printf("\n"); // Новый строк после вывода всех слов
+        free(words); // Освобождаем массив указателей
 
     printf("13.strisipv4: %d\n", strisipv4("192.168.0.1"));
+    printf("   strisipv4: %d\n", strisipv4("192.168.1.0/24"));
+    printf("   strisipv4: %d\n", strisipv4("192.168.0.256"));
+    printf("   strisipv4: %d\n", strisipv4("092.01.0.1"));
 
     size_t *char_counts = strcountchars("hello");
     printf("14.strcountchars: %zu\n", char_counts['l']);
     free(char_counts);
 
     return 0;
+    }
 }
 
