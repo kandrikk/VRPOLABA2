@@ -29,8 +29,10 @@ int main() {
 
     printf("9.strfindlastof: %d\n", strfindlastof("hello", "abcde"));
 
-    printf("10.strispalindrome: %d\n", strispalindrome("madam"));
+    char str10[] = "Go hang a salami I'm a lasagna hog";
+    printf("10.strispalindrome: %d\n", strispalindrome(str10));
 
+    char str11[] = "Was it a car or a cat I saw";
     printf("11.strcountwords: %zu\n", strcountwords("Was it a car or a cat I saw"));
 
     size_t count;
@@ -40,6 +42,8 @@ int main() {
         printf("%s ", words[i]);
         free(words[i]);
     }
+
+    
     free(words);
     printf("\n");
 

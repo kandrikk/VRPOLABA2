@@ -89,14 +89,13 @@ char* substr(const char *str, size_t pos, size_t count) {
 }
 
 int strfindlastof(const char *str, const char *symbols) {
-    const char *last = NULL;
-    while (*str) {
-        if (strchr(symbols, *str)) {
-            last = str;
+    int last_index = -1;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (strchr(symbols, str[i]) != NULL) {
+            last_index = i;
         }
-        str++;
     }
-    return last ? (int)(last - str + strlen(str)) : -1;
+    return last_index;
 }
 
 int strispalindrome(const char *str) {
@@ -134,23 +133,29 @@ size_t strcountwords(const char *str) {
     return count;
 }
 
+// 12. Разбиение строки на слова
 char** strtowords(const char *str, size_t *count) {
+    *count = 0;
     char *copy = strdup(str);
     if (!copy) return NULL;
-    char *token = strtok(copy, " ");
+
     char **words = NULL;
-    size_t word_count = 0;
-    while (token) {
-        words = realloc(words, (word_count + 1) * sizeof(char*));
-        if (!words) {
+    char *word = strtok(copy, " \t\n.,!?");
+
+    while (word) {
+        char **new_words = realloc(words, (*count + 1) * sizeof(char*));
+        if (!new_words) {
             free(copy);
+            free(words);
             return NULL;
         }
-        words[word_count++] = strdup(token);
-        token = strtok(NULL, " ");
+        words = new_words;
+        words[*count] = strdup(word);
+        (*count)++;
+        word = strtok(NULL, " \t\n.,!?");
     }
+
     free(copy);
-    *count = word_count;
     return words;
 }
 
