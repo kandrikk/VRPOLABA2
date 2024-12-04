@@ -96,7 +96,7 @@ int strfindlastof(const char *str, const char *symbols) {
         }
         str++;
     }
-    return last ? (int)(last - str) : -1;
+    return last ? (int)(last - str + strlen(str)) : -1;
 }
 
 int strispalindrome(const char *str) {
