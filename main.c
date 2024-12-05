@@ -42,14 +42,14 @@ int main() {
     printf("12.strtowords: ");
     if (words) {
         for (size_t i = 0; i < count; i++) {
-            printf("%s", words[i]); // Печатаем слово
+            printf("%s", words[i]); 
             if (i < count - 1) {
-                printf(";"); // Добавляем точку с запятой, если это не последнее слово
+                printf(";"); 
             }
-            free(words[i]); // Освобождаем память под каждое слово
+            free(words[i]);
         }
-        printf("\n"); // Новый строк после вывода всех слов
-        free(words); // Освобождаем массив указателей
+        printf("\n");
+        free(words);
 
     printf("13.strisipv4: %d\n", strisipv4("192.168.0.1"));
     printf("   strisipv4: %d\n", strisipv4("192.168.1.0/24"));
