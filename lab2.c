@@ -1,8 +1,4 @@
 #include "lab2.h"
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 char* strtolower(char *str) {
     char *ptr = str;

@@ -1,6 +1,10 @@
 #ifndef LAB2_H
 #define LAB2_H
-
+ 
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <stddef.h>
 
 // Прототипы функций
